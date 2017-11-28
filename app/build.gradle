@@ -1,0 +1,88 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+apply plugin: 'kotlin-kapt'
+
+
+android {
+    compileSdkVersion 27
+    buildToolsVersion "26.0.1"
+    defaultConfig {
+        applicationId "com.myra.ecomm"
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
+    }
+    buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://stark-spire-93433.herokuapp.com\"")
+        }
+        release {
+            buildConfigField("String", "BASE_URL", "\"https://stark-spire-93433.herokuapp.com\"")
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    kapt {
+        generateStubs = true
+    }
+
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+
+    compile 'com.google.code.gson:gson:2.8.1'
+    compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.0'
+    compile "io.reactivex.rxjava2:rxandroid:2.0.1"
+
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+
+    //google support libraries
+    compile "com.android.support:support-v4:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:percent:$rootProject.supportLibraryVersion"
+
+    compile "android.arch.persistence.room:rxjava2:1.0.0-alpha9"
+    compile 'com.facebook.stetho:stetho:1.4.1'
+
+    compile "android.arch.persistence.room:runtime:1.0.0-alpha9"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha9"
+    kapt "android.arch.persistence.room:compiler:1.0.0-alpha9"
+
+    compile "android.arch.lifecycle:extensions:1.0.0-alpha9-1"
+
+    // dependency injection
+    compile "com.google.dagger:dagger:$rootProject.dagger2Version"
+    compile "com.google.dagger:dagger-android:$rootProject.dagger2Version"
+    compile "com.google.dagger:dagger-android-support:$rootProject.dagger2Version"
+    kapt "com.google.dagger:dagger-compiler:$rootProject.dagger2Version"
+    kapt "com.google.dagger:dagger-android-processor:$rootProject.dagger2Version"
+
+    kapt "com.android.databinding:compiler:$rootProject.android_plugin_version"
+}
