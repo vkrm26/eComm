@@ -7,6 +7,7 @@ import com.myra.ecomm.ui.main.MainActivity
 import com.myra.ecomm.ui.main.adapter.CategoryViewHolder
 import com.myra.ecomm.ui.main.adapter.CategoryViewHolderModule
 import com.myra.ecomm.ui.main.adapter.CategoryViewModel
+import com.myra.ecomm.ui.products.ProductsActivity
 import dagger.Component
 
 /**
@@ -17,5 +18,7 @@ import dagger.Component
 interface ViewHolderComponent : AppComponent {
 
     fun inject(viewHolder: CategoryViewHolder)
+
+    fun injectProductsActivity(productsActivity: ProductsActivity)
 
 }

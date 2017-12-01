@@ -1,4 +1,4 @@
-package com.myra.ecomm.ui.products
+package com.myra.ecomm.ui.productDetail
 
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
@@ -14,7 +14,7 @@ import io.reactivex.schedulers.Schedulers
 /**
  * Created by vikrambhati on 30/11/17.
  */
-class ProductsViewModel(dataManager: DataManager) : BaseViewModel<Navigator>(dataManager) {
+class ProductDetailViewModel(dataManager: DataManager) : BaseViewModel<Navigator>(dataManager) {
 
 //    val category = categoryItem
     var categoryName: ObservableField<String>

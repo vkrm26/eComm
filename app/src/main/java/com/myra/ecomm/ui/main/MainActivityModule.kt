@@ -36,18 +36,8 @@ class MainActivityModule {
     }
 
     @Provides
-    fun provideGridLayoutManager(context: Context): GridLayoutManager {
-        return GridLayoutManager(context, 2)
-    }
-
-    @Provides
     fun provideCategoryAdapter(): CategoryAdapter {
         return CategoryAdapter(ArrayList<Category>())
-    }
-
-    @Provides
-    fun provideProductsAdapter(): ProductAdapter {
-        return ProductAdapter(ArrayList<Product>())
     }
 
 }

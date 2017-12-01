@@ -4,12 +4,11 @@ import android.content.Intent
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import com.myra.ecomm.App
-import com.myra.ecomm.data.DataManager
 import com.myra.ecomm.data.source.model.db.Category
 import com.myra.ecomm.databinding.ItemCategoryBinding
 import com.myra.ecomm.di.component.DaggerViewHolderComponent
 import com.myra.ecomm.ui.base.BaseViewHolder
-import com.myra.ecomm.ui.productDetail.ProductDetailActivity
+import com.myra.ecomm.ui.products.ProductsActivity
 import javax.inject.Inject
 
 /**
@@ -61,8 +60,8 @@ class CategoryViewHolder (categoryBinding: ItemCategoryBinding) : BaseViewHolder
     }
 
     override fun onMoreOptionClick(category: Category) {
-        var intent = Intent(itemCategoryBinding.root.context, ProductDetailActivity::class.java)
-        intent.putExtra("categoryId", category.categoryId)
+        var intent = Intent(itemCategoryBinding.root.context, ProductsActivity::class.java)
+        intent.putExtra("categoryId", category)
         itemCategoryBinding.root.context.startActivity(intent)
     }
 

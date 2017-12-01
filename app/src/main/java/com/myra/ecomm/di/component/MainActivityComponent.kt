@@ -15,6 +15,4 @@ interface MainActivityComponent : AppComponent {
 
     fun injectMainActivity(mainActivity: MainActivity)
 
-    fun injectProductsActivity(productsActivity: ProductsActivity)
-
 }

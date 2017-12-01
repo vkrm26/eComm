@@ -21,9 +21,7 @@
         </activity>
         <activity android:name=".ui.productDetail.ProductDetailActivity" />
         <activity
-            android:name=".ui.products.ProductsActivity"
-            android:label="@string/title_activity_products"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:name=".ui.products.ProductsActivity"></activity>
     </application>
 
 </manifest>
