@@ -3,8 +3,11 @@ package com.myra.ecomm.ui.main.adapter
 import android.content.Intent
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import com.myra.ecomm.App
+import com.myra.ecomm.data.DataManager
 import com.myra.ecomm.data.source.model.db.Category
 import com.myra.ecomm.databinding.ItemCategoryBinding
+import com.myra.ecomm.di.component.DaggerViewHolderComponent
 import com.myra.ecomm.ui.base.BaseViewHolder
 import com.myra.ecomm.ui.productDetail.ProductDetailActivity
 import javax.inject.Inject
@@ -18,26 +21,42 @@ class CategoryViewHolder (categoryBinding: ItemCategoryBinding) : BaseViewHolder
 
     private lateinit var bindingViewModel : CategoryViewModel
 
-    var categoryViewModelListener: CategoryViewModel.CategoryViewModelListener = this
+    @Inject
+    lateinit var layoutManager : LinearLayoutManager
 
-//    @Inject
-//    lateinit var productAdapter : ProductAdapter
+    @Inject
+    lateinit var productAdapter : ProductAdapter
+
+    @Inject
+    lateinit var categoryViewModel: CategoryViewModel
+
+    private var viewHolder: CategoryViewHolder
+
 
     init {
-        viewHolderComponent().inject(this)
+
+        viewHolder = this
+
+        DaggerViewHolderComponent.builder()
+                .appComponent(App.instance.appComponent)
+                .categoryViewHolderModule(CategoryViewHolderModule())
+                .build()
+                .inject(this)
     }
 
+
     fun bind(category: Category) = with(itemView) {
-
-
-        bindingViewModel = CategoryViewModel(dataManager!!, category, categoryViewModelListener)
+        bindingViewModel = categoryViewModel!!
         itemCategoryBinding.viewModel = bindingViewModel
 
-//        layoutManager!!.orientation = LinearLayoutManager.HORIZONTAL
-//        itemCategoryBinding.recyclerProduct.setLayoutManager(layoutManager)
-//        itemCategoryBinding.recyclerProduct.setItemAnimator(DefaultItemAnimator())
-//        itemCategoryBinding.recyclerProduct.setAdapter(productAdapter)
-//
+        bindingViewModel.setCategory(category)
+        bindingViewModel.categoryViewListener = viewHolder
+
+        layoutManager!!.orientation = LinearLayoutManager.HORIZONTAL
+        itemCategoryBinding.recyclerProduct.setLayoutManager(layoutManager)
+        itemCategoryBinding.recyclerProduct.setItemAnimator(DefaultItemAnimator())
+        itemCategoryBinding.recyclerProduct.setAdapter(productAdapter)
+
         itemCategoryBinding.executePendingBindings()
     }
 

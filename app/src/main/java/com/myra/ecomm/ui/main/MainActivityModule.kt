@@ -1,29 +1,24 @@
 package com.myra.ecomm.ui.main
 
 import android.arch.lifecycle.ViewModelProvider
-import android.support.v7.app.AppCompatActivity
+import android.content.Context
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
 import com.myra.ecomm.ViewModelProviderFactory
 import com.myra.ecomm.data.DataManager
 import com.myra.ecomm.data.source.model.db.Category
+import com.myra.ecomm.data.source.model.db.Product
 import com.myra.ecomm.ui.main.adapter.CategoryAdapter
+import com.myra.ecomm.ui.main.adapter.ProductAdapter
 import dagger.Module
 import dagger.Provides
 import java.util.ArrayList
-import javax.inject.Inject
 
 /**
  * Created by vikrambhati on 24/11/17.
  */
-@Module
+@Module()
 class MainActivityModule {
-
-    private val activity : AppCompatActivity
-
-    @Inject
-    constructor(mActivity: AppCompatActivity) {
-        this.activity = mActivity
-    }
 
     @Provides
     fun provideMainViewModel(dataManager: DataManager): MainViewModel {
@@ -36,12 +31,23 @@ class MainActivityModule {
     }
 
     @Provides
-    fun provideLinearLayoutManager(): LinearLayoutManager {
-        return LinearLayoutManager(activity)
+    fun provideLinearLayoutManager(context: Context): LinearLayoutManager {
+        return LinearLayoutManager(context)
+    }
+
+    @Provides
+    fun provideGridLayoutManager(context: Context): GridLayoutManager {
+        return GridLayoutManager(context, 2)
     }
 
     @Provides
     fun provideCategoryAdapter(): CategoryAdapter {
         return CategoryAdapter(ArrayList<Category>())
     }
+
+    @Provides
+    fun provideProductsAdapter(): ProductAdapter {
+        return ProductAdapter(ArrayList<Product>())
+    }
+
 }

@@ -35,7 +35,6 @@ class AppModule {
         return AppConstants.DB_NAME
     }
 
-
     @Provides
     @Singleton
     fun provideAppDatabase(@DatabaseInfo dbName: String, context: Context): AppDatabase {

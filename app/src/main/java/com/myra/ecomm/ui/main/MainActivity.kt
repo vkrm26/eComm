@@ -6,12 +6,15 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import com.myra.ecomm.App
 import com.myra.ecomm.BR
 import com.myra.ecomm.R
 import com.myra.ecomm.databinding.ActivityMainBinding
+import com.myra.ecomm.di.component.ActivityComponent
+import com.myra.ecomm.di.component.DaggerMainActivityComponent
 import com.myra.ecomm.ui.base.BaseActivity
-import com.myra.ecomm.ui.productDetail.ProductDetailActivity
 import com.myra.ecomm.ui.main.adapter.CategoryAdapter
+import com.myra.ecomm.ui.productDetail.ProductDetailActivity
 import javax.inject.Inject
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNavigator {
@@ -33,7 +36,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
 
         DaggerMainActivityComponent
                 .builder()
-                .mainActivityModule(MainActivityModule(this))
+                .appComponent(App.instance.appComponent)
                 .build()
                 .injectMainActivity(this)
 
@@ -79,17 +82,4 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
             mainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel::class.java)
             return mainViewModel!!
         }
-
-//    override fun activityComponent(): ActivityComponent {
-//        if (mActivityComponent == null) {
-//            mActivityComponent = DaggerMainActivityComponent.builder()
-//                    .activityModule(ActivityModule(this))
-//                    .mainActivityModule(MainActivityModule(this))
-//                    .build()
-//        }
-//
-//
-//        return mActivityComponent!!
-//    }
-
 }

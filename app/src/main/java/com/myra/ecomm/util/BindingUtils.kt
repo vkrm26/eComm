@@ -6,6 +6,7 @@ import com.myra.ecomm.data.source.model.db.Category
 import com.myra.ecomm.data.source.model.db.Product
 import com.myra.ecomm.ui.main.adapter.CategoryAdapter
 import com.myra.ecomm.ui.main.adapter.ProductAdapter
+//import com.myra.ecomm.ui.main.adapter.ProductAdapter
 import java.util.ArrayList
 
 /**
@@ -21,13 +22,13 @@ fun addCategoryItems(recyclerView: RecyclerView,
     }
 }
 
-//@BindingAdapter("productAdapter")
-//fun addProductItems(recyclerView: RecyclerView,
-//                     productList: MutableList<Product>) {
-//    val adapter = recyclerView.adapter as? ProductAdapter
-//    if (adapter != null) {
-//        adapter!!.clearItems()
-//        adapter!!.addItems(productList)
-//    }
-//}
+@BindingAdapter("productAdapter")
+fun addProductItems(recyclerView: RecyclerView,
+                     productList: MutableList<Product>) {
+    val adapter = recyclerView.adapter as? ProductAdapter
+    if (adapter != null) {
+        adapter!!.clearItems()
+        adapter!!.addItems(productList)
+    }
+}
 

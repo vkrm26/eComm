@@ -1,6 +1,7 @@
 package com.myra.ecomm.di.component
 
 import android.app.Application
+import android.content.Context
 import com.myra.ecomm.data.DataManager
 import com.myra.ecomm.di.module.AppModule
 import dagger.BindsInstance
@@ -25,6 +26,8 @@ interface AppComponent {
     }
 
 //    fun inject(app: App)
+
+    fun getContext() : Context
 
     fun getDataManager() : DataManager
 

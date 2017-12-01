@@ -18,13 +18,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>?> : AppCom
 
     private var mViewModel: V? = null
 
-
-//    var mActivityComponent: ActivityComponent? = null
-
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        activityComponent()
         performDataBinding()
     }
 
@@ -35,7 +30,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>?> : AppCom
         viewDataBinding!!.executePendingBindings()
     }
 
-//    abstract fun activityComponent(): ActivityComponent
 
     fun onFragmentAttached() {
 

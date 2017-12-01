@@ -1,4 +1,4 @@
-package com.myra.ecomm.ui.main.adapter
+package com.myra.ecomm.ui.products
 
 import android.databinding.ObservableArrayList
 import android.databinding.ObservableField
@@ -12,27 +12,19 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 /**
- * Created by vikrambhati on 26/11/17.
+ * Created by vikrambhati on 30/11/17.
  */
-class CategoryViewModel(dataManager: DataManager) : BaseViewModel<Navigator>(dataManager) {
+class ProductsViewModel(dataManager: DataManager) : BaseViewModel<Navigator>(dataManager) {
 
-    lateinit var categoryName: ObservableField<String>
+//    val category = categoryItem
+    var categoryName: ObservableField<String>
     var productList: ObservableArrayList<Product>
-    lateinit var categoryViewListener : CategoryViewModelListener
-    lateinit var mCategory: Category
+//    var productViewListener : ProductViewModelListener = productViewModelListener
 
     init {
+        categoryName = ObservableField<String>(/*category.categoryName*/)
         productList = ObservableArrayList()
-    }
-
-    fun setCategory(category: Category) {
-        mCategory = category
-        categoryName = ObservableField<String>(category.categoryName)
-        getProductsForThisCategory(category.categoryId)
-    }
-
-    fun setListener(categoryViewListener : CategoryViewModelListener) {
-        this.categoryViewListener = categoryViewListener
+//        getProductsForThisCategory(category.categoryId)
     }
 
     fun getProductsForThisCategory(categoryId: Int) {
@@ -51,12 +43,8 @@ class CategoryViewModel(dataManager: DataManager) : BaseViewModel<Navigator>(dat
                 }))
     }
 
-    interface CategoryViewModelListener {
+    interface ProductViewModelListener {
         fun onMoreOptionClick(category: Category)
-    }
-
-    fun onMoreOptionClick() {
-        categoryViewListener.onMoreOptionClick(mCategory)
     }
 
 }
