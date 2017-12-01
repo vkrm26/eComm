@@ -3,7 +3,6 @@ package com.myra.ecomm.di.module
 import android.app.Application
 import android.arch.persistence.room.Room
 import android.content.Context
-import android.support.v7.widget.LinearLayoutManager
 import com.myra.ecomm.AppConstants
 import com.myra.ecomm.data.AppDataManager
 import com.myra.ecomm.data.DataManager
@@ -13,7 +12,7 @@ import com.myra.ecomm.data.source.local.DBHelper
 import com.myra.ecomm.data.source.remote.ApiHelper
 import com.myra.ecomm.data.source.remote.AppApiHelper
 import com.myra.ecomm.di.DatabaseInfo
-import com.myra.ecomm.ui.main.MainActivity
+import com.myra.ecomm.ui.navigator.Navigator
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

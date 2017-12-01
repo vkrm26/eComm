@@ -7,13 +7,15 @@ import android.view.View
 import com.myra.ecomm.App
 import com.myra.ecomm.Util
 import com.myra.ecomm.data.DataManager
+import com.myra.ecomm.di.component.ActivityComponent
 import com.myra.ecomm.di.component.DaggerViewHolderComponent
 import com.myra.ecomm.di.component.ViewHolderComponent
+import com.myra.ecomm.ui.navigator.Navigator
 
 /**
  * Created by vikrambhati on 28/11/17.
  */
-abstract class BaseViewHolder<T : ViewDataBinding, V : BaseViewModel<*>?> : RecyclerView.ViewHolder   {
+abstract class BaseViewHolder<T : ViewDataBinding, V : BaseViewModel<Navigator>?> : RecyclerView.ViewHolder   {
 
     val view: View
 
@@ -23,7 +25,10 @@ abstract class BaseViewHolder<T : ViewDataBinding, V : BaseViewModel<*>?> : Recy
 
     var viewHolderComponent: ViewHolderComponent? = null
 
+    var activityComponent: ActivityComponent ? = null
+
     var dataManager: DataManager ? = null
+//    var layoutManager: LinearLayoutManager ? = null
 
     constructor(itemView: View) : super(itemView) {
         this.view = itemView
@@ -31,15 +36,20 @@ abstract class BaseViewHolder<T : ViewDataBinding, V : BaseViewModel<*>?> : Recy
 
     protected fun viewHolderComponent(): ViewHolderComponent {
         if (viewHolderComponent == null) {
+            activityComponent = Util.castActivityFromContext(view.context, BaseActivity::class.java)!!.activityComponent()
+
             viewHolderComponent = DaggerViewHolderComponent.builder()
-                    .appComponent(App.instance.appComponent)
+                    .activityComponent(activityComponent)
                     .build()
         }
 
         dataManager = App.instance.appComponent.getDataManager()
+//        layoutManager = activityComponent!!.layoutManager()
 
         return viewHolderComponent!!
     }
+
+
 
 
 }

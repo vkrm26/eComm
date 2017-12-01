@@ -7,20 +7,21 @@ import com.myra.ecomm.data.DataManager
 import com.myra.ecomm.data.source.model.db.Category
 import com.myra.ecomm.data.source.model.db.Product
 import com.myra.ecomm.ui.base.BaseViewModel
-import com.myra.ecomm.ui.main.MainNavigator
+import com.myra.ecomm.ui.navigator.Navigator
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by vikrambhati on 26/11/17.
  */
-class CategoryViewModel(dataManager: DataManager, categoryItem: Category) : BaseViewModel<MainNavigator>(dataManager) {
+class CategoryViewModel(dataManager: DataManager, categoryItem: Category, categoryViewModelListener: CategoryViewModelListener) : BaseViewModel<Navigator>(dataManager) {
 
+    val category = categoryItem
     var categoryName: ObservableField<String>
     var productList: ObservableArrayList<Product>
+    var categoryViewListener : CategoryViewModelListener = categoryViewModelListener
 
     init {
-        val category = categoryItem
         categoryName = ObservableField<String>(category.categoryName)
         productList = ObservableArrayList()
         getProductsForThisCategory(category.categoryId)
@@ -42,8 +43,12 @@ class CategoryViewModel(dataManager: DataManager, categoryItem: Category) : Base
                 }))
     }
 
+    interface CategoryViewModelListener {
+        fun onMoreOptionClick(category: Category)
+    }
+
     fun onMoreOptionClick() {
-        getNavigator().openProductDetailActivity()
+        categoryViewListener.onMoreOptionClick(category)
     }
 
 }

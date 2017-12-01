@@ -21,13 +21,13 @@ fun addCategoryItems(recyclerView: RecyclerView,
     }
 }
 
-@BindingAdapter("productAdapter")
-fun addProductItems(recyclerView: RecyclerView,
-                     productList: MutableList<Product>) {
-    val adapter = recyclerView.adapter as? ProductAdapter
-    if (adapter != null) {
-        adapter!!.clearItems()
-        adapter!!.addItems(productList)
-    }
-}
+//@BindingAdapter("productAdapter")
+//fun addProductItems(recyclerView: RecyclerView,
+//                     productList: MutableList<Product>) {
+//    val adapter = recyclerView.adapter as? ProductAdapter
+//    if (adapter != null) {
+//        adapter!!.clearItems()
+//        adapter!!.addItems(productList)
+//    }
+//}
 

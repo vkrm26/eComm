@@ -1,8 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.detail.DetailActivity">
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--&lt;!&ndash;<layout xmlns:android="http://schemas.android.com/apk/res/android"&ndash;&gt;-->
+    <!--&lt;!&ndash;xmlns:tools="http://schemas.android.com/tools"&ndash;&gt;-->
+    <!--&lt;!&ndash;xmlns:app="http://schemas.android.com/apk/res-auto">&ndash;&gt;-->
 
-</android.support.constraint.ConstraintLayout>
+    <!--&lt;!&ndash;<data>&ndash;&gt;-->
+        <!--&lt;!&ndash;<import type="android.view.View" />&ndash;&gt;-->
+        <!--&lt;!&ndash;<variable name="viewModel" type="com.myra.ecomm.ui.products.ProductsViewModel"/>&ndash;&gt;-->
+    <!--&lt;!&ndash;</data>&ndash;&gt;-->
+
+    <!--&lt;!&ndash;<android.support.v7.widget.RecyclerView&ndash;&gt;-->
+        <!--&lt;!&ndash;android:id="@+id/recycler_product"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_width="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;android:layout_height="match_parent"&ndash;&gt;-->
+        <!--&lt;!&ndash;app:productAdapter="@{viewModel.productList}"&ndash;&gt;-->
+        <!--&lt;!&ndash;tools:listitem="@layout/item_product" />&ndash;&gt;-->
+
+<!--&lt;!&ndash;</layout>&ndash;&gt;-->

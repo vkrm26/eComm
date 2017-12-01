@@ -1,6 +1,7 @@
 package com.myra.ecomm.ui.main
 
 import android.arch.lifecycle.ViewModelProvider
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import com.myra.ecomm.ViewModelProviderFactory
 import com.myra.ecomm.data.DataManager
@@ -9,12 +10,20 @@ import com.myra.ecomm.ui.main.adapter.CategoryAdapter
 import dagger.Module
 import dagger.Provides
 import java.util.ArrayList
+import javax.inject.Inject
 
 /**
  * Created by vikrambhati on 24/11/17.
  */
 @Module
 class MainActivityModule {
+
+    private val activity : AppCompatActivity
+
+    @Inject
+    constructor(mActivity: AppCompatActivity) {
+        this.activity = mActivity
+    }
 
     @Provides
     fun provideMainViewModel(dataManager: DataManager): MainViewModel {
@@ -27,7 +36,7 @@ class MainActivityModule {
     }
 
     @Provides
-    fun provideLinearLayoutManager(activity: MainActivity): LinearLayoutManager {
+    fun provideLinearLayoutManager(): LinearLayoutManager {
         return LinearLayoutManager(activity)
     }
 

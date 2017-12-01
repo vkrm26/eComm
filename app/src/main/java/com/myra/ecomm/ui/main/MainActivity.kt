@@ -10,7 +10,7 @@ import com.myra.ecomm.BR
 import com.myra.ecomm.R
 import com.myra.ecomm.databinding.ActivityMainBinding
 import com.myra.ecomm.ui.base.BaseActivity
-import com.myra.ecomm.ui.detail.DetailActivity
+import com.myra.ecomm.ui.productDetail.ProductDetailActivity
 import com.myra.ecomm.ui.main.adapter.CategoryAdapter
 import javax.inject.Inject
 
@@ -27,11 +27,20 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
     @Inject
     lateinit var categoryAdapter: CategoryAdapter
 
-
     var mainViewModel: MainViewModel? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        DaggerMainActivityComponent
+                .builder()
+                .mainActivityModule(MainActivityModule(this))
+                .build()
+                .injectMainActivity(this)
+
+
         super.onCreate(savedInstanceState)
+
+
         mActivityMainBinding = viewDataBinding!!
         viewModel.setNavigator(this)
         setup()
@@ -49,7 +58,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
     }
 
     override fun openProductDetailActivity() {
-        var openDetailIntent = Intent(this, DetailActivity::class.java)
+        var openDetailIntent = Intent(this, ProductDetailActivity::class.java)
         startActivity(openDetailIntent)
     }
 
@@ -70,5 +79,17 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
             mainViewModel = ViewModelProviders.of(this, mViewModelFactory).get(MainViewModel::class.java)
             return mainViewModel!!
         }
+
+//    override fun activityComponent(): ActivityComponent {
+//        if (mActivityComponent == null) {
+//            mActivityComponent = DaggerMainActivityComponent.builder()
+//                    .activityModule(ActivityModule(this))
+//                    .mainActivityModule(MainActivityModule(this))
+//                    .build()
+//        }
+//
+//
+//        return mActivityComponent!!
+//    }
 
 }

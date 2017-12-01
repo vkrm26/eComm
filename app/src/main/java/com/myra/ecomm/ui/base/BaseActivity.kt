@@ -5,7 +5,7 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
-import dagger.android.AndroidInjection
+import com.myra.ecomm.di.component.ActivityComponent
 
 /**
  * Created by vikrambhati on 24/11/17.
@@ -18,9 +18,13 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>?> : AppCom
 
     private var mViewModel: V? = null
 
+
+//    var mActivityComponent: ActivityComponent? = null
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        performDependencyInjection()
+//        activityComponent()
         performDataBinding()
     }
 
@@ -30,6 +34,8 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>?> : AppCom
         viewDataBinding!!.setVariable(bindingVariable, mViewModel)
         viewDataBinding!!.executePendingBindings()
     }
+
+//    abstract fun activityComponent(): ActivityComponent
 
     fun onFragmentAttached() {
 
@@ -58,10 +64,6 @@ abstract class BaseActivity<T : ViewDataBinding, V : BaseViewModel<*>?> : AppCom
      */
     @get:LayoutRes
     abstract val layoutId: Int
-
-    fun performDependencyInjection() {
-        AndroidInjection.inject(this)
-    }
 
 }
 

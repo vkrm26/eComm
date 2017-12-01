@@ -14,10 +14,10 @@ import javax.inject.Inject
 /**
  * Created by vikrambhati on 24/11/17.
  */
-class App : Application(), HasActivityInjector {
+class App : Application()/*, HasActivityInjector*/ {
 
-    @Inject
-    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+//    @Inject
+//    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
     lateinit var appComponent : AppComponent
 
@@ -29,7 +29,7 @@ class App : Application(), HasActivityInjector {
                 .application(this)
                 .build()
 
-        appComponent.inject(this)
+//        appComponent.inject(this)
 
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this)
@@ -43,8 +43,8 @@ class App : Application(), HasActivityInjector {
             private set
     }
 
-    override fun activityInjector(): AndroidInjector<Activity> {
-        return activityDispatchingAndroidInjector
-    }
+//    override fun activityInjector(): AndroidInjector<Activity> {
+//        return activityDispatchingAndroidInjector
+//    }
 
 }
