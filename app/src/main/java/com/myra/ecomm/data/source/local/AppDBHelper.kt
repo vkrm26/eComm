@@ -1,7 +1,6 @@
 package com.myra.ecomm.data.source.local
 
-import com.myra.ecomm.data.source.model.db.Category
-import com.myra.ecomm.data.source.model.db.Product
+import com.myra.ecomm.data.source.model.db.*
 import io.reactivex.Flowable
 import io.reactivex.Maybe
 import java.util.*
@@ -13,6 +12,13 @@ import javax.inject.Singleton
  */
 @Singleton
 class AppDBHelper: DBHelper {
+
+    val appDatabase: AppDatabase
+
+    @Inject
+    constructor(database: AppDatabase) {
+        this.appDatabase = database
+    }
 
     override fun insertCategoriesInDB(categoryList: List<Category>) {
         appDatabase.categoryDao().insertAllCategories(categoryList)
@@ -27,22 +33,39 @@ class AppDBHelper: DBHelper {
     }
 
     override fun getProductDetailFromDB(productId: Int): Maybe<Product> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+        return Maybe.just(appDatabase.productDao().getProductDetail(productId))
     }
 
-    override fun getSimilarProductsWithGivenCategoryIdFromDB(productId: Int, categoryId: Int): Maybe<List<Product>> {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun getSimilarProductsWithGivenCategoryIdFromDB(categoryId: Int, productId: Int): Maybe<List<Product>> {
+        return Maybe.just(appDatabase.productDao().getSimilarProductsWithGivenCategoryId(categoryId, productId))
     }
 
     override fun insertAllProductsInDB(productList: List<Product>) {
         appDatabase.productDao().insertAllProducts(productList)
     }
 
-    val appDatabase: AppDatabase
+    override fun insertOrderedRankingInDB(orderedRankingList: List<OrderedRanking>) {
+        appDatabase.rankingDao().insertAllOrderedRanking(orderedRankingList)
+    }
 
-    @Inject
-    constructor(database: AppDatabase) {
-        this.appDatabase = database
+    override fun insertSharedRankingInDB(sharedRankingList: List<SharedRanking>) {
+        appDatabase.rankingDao().insertAllSharedRanking(sharedRankingList)
+    }
+
+    override fun insertViewedRankingInDB(viewedRankingList: List<ViewedRanking>) {
+        appDatabase.rankingDao().insertAllViewedRanking(viewedRankingList)
+    }
+
+    override fun getOrderedRanking(): Maybe<List<OrderedRanking>> {
+        return Maybe.just(appDatabase.rankingDao().getOrderedRanking())
+    }
+
+    override fun getSharedRanking(): Maybe<List<SharedRanking>> {
+        return Maybe.just(appDatabase.rankingDao().getSharedRanking())
+    }
+
+    override fun getViewedRanking(): Maybe<List<ViewedRanking>> {
+        return Maybe.just(appDatabase.rankingDao().getViewedRanking())
     }
 
 }

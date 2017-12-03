@@ -18,7 +18,7 @@ class VariantResponse {
     var color: String? = null
     @SerializedName("size")
     @Expose
-    var size: Any? = null
+    var size: String? = null
     @SerializedName("price")
     @Expose
     var price: Int? = null

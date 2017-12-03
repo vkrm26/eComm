@@ -1,23 +1,14 @@
 package com.myra.ecomm
 
-import android.app.Activity
 import android.app.Application
 import com.facebook.stetho.Stetho
 import com.myra.ecomm.di.component.AppComponent
 import com.myra.ecomm.di.component.DaggerAppComponent
-import dagger.android.AndroidInjection
-import dagger.android.AndroidInjector
-import dagger.android.DispatchingAndroidInjector
-import dagger.android.HasActivityInjector
-import javax.inject.Inject
 
 /**
  * Created by vikrambhati on 24/11/17.
  */
-class App : Application()/*, HasActivityInjector*/ {
-
-//    @Inject
-//    lateinit var activityDispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
+class App : Application() {
 
     lateinit var appComponent : AppComponent
 
@@ -28,8 +19,6 @@ class App : Application()/*, HasActivityInjector*/ {
         appComponent = DaggerAppComponent.builder()
                 .application(this)
                 .build()
-
-//        appComponent.inject(this)
 
         if (BuildConfig.DEBUG) {
             Stetho.initializeWithDefaults(this)
@@ -42,9 +31,4 @@ class App : Application()/*, HasActivityInjector*/ {
         lateinit var instance: App
             private set
     }
-
-//    override fun activityInjector(): AndroidInjector<Activity> {
-//        return activityDispatchingAndroidInjector
-//    }
-
 }

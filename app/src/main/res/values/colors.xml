@@ -3,4 +3,19 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="Red">#f00</color>
+    <color name="Black">#000</color>
+    <color name="Grey">#808080</color>
+    <color name="Blue">#0000FF</color>
+    <color name="White">#fff</color>
+    <color name="Yellow">#FFFF00</color>
+    <color name="Light_Blue">#87cefa</color>
+    <color name="Green">#008000</color>
+    <color name="Brown">#8b7355</color>
+    <color name="Silver">#C0C0C0</color>
+    <color name="Golden">#ffd700</color>
+
+    <color name="defaultColor">#d5d5d5</color>
+
 </resources>

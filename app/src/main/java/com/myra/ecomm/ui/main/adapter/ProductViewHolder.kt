@@ -26,7 +26,7 @@ class ProductViewHolder (productBinding: ItemProductBinding) : RecyclerView.View
 
     override fun openProductDetailClick(product: Product) {
         var intent = Intent(itemProductBinding.root.context, ProductDetailActivity::class.java)
-        intent.putExtra("productId", product.productId)
+        intent.putExtra("product", product)
         itemProductBinding.root.context.startActivity(intent)
     }
 }

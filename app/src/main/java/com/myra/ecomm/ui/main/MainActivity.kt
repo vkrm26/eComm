@@ -6,6 +6,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
+import android.view.MenuItem
 import com.myra.ecomm.App
 import com.myra.ecomm.BR
 import com.myra.ecomm.R
@@ -16,6 +18,10 @@ import com.myra.ecomm.ui.base.BaseActivity
 import com.myra.ecomm.ui.main.adapter.CategoryAdapter
 import com.myra.ecomm.ui.productDetail.ProductDetailActivity
 import javax.inject.Inject
+import android.R.menu
+import android.view.MenuInflater
+import com.myra.ecomm.ui.ranking.ProductRankingActivity
+
 
 class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNavigator {
 
@@ -51,6 +57,26 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
 
     override fun onResume() {
         super.onResume()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when (item!!.getItemId()) {
+            R.id.most_viewed -> {
+                var intent = Intent(this, ProductRankingActivity::class.java)
+                startActivity(intent)
+            }
+            R.id.most_ordered -> {
+            }
+            R.id.most_shared -> {
+            }
+        }
+        return true
     }
 
     private fun setup() {

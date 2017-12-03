@@ -16,12 +16,13 @@ import io.reactivex.schedulers.Schedulers
  */
 class CategoryViewModel(dataManager: DataManager) : BaseViewModel<Navigator>(dataManager) {
 
-    lateinit var categoryName: ObservableField<String>
+    var categoryName: ObservableField<String>
     var productList: ObservableArrayList<Product>
     lateinit var categoryViewListener : CategoryViewModelListener
     lateinit var mCategory: Category
 
     init {
+        categoryName = ObservableField()
         productList = ObservableArrayList()
     }
 

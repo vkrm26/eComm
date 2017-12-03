@@ -5,10 +5,10 @@ import com.myra.ecomm.data.source.local.DBHelper
 import com.myra.ecomm.data.source.model.TaxInfo
 import com.myra.ecomm.data.source.model.VariantInfo
 import com.myra.ecomm.data.source.model.api.ApiResponse
-import com.myra.ecomm.data.source.model.db.Category
-import com.myra.ecomm.data.source.model.db.Product
+import com.myra.ecomm.data.source.model.db.*
 import com.myra.ecomm.data.source.remote.ApiHelper
 import io.reactivex.Maybe
+import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -40,10 +40,11 @@ class AppDataManager: DataManager {
     }
 
     override fun getAllCategory(): Maybe<List<Category>> {
-        var categoryFromDB = getAllCategoriesFromDB()
+//        var categoryFromDB = getAllCategoriesFromDB()
         var categoryFromServer = getCategoryFromServer()
 
-        return Maybe.concat(categoryFromDB, categoryFromServer).firstElement()
+//        return Maybe.concat(categoryFromDB, categoryFromServer).firstElement()
+        return categoryFromServer
 
     }
 
@@ -59,8 +60,7 @@ class AppDataManager: DataManager {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe( {
                 result ->
-                Log.d("vikram", "size - " + result.size)
-        })
+                Log.d("vikram", "size - " + result.size) })
 
         return response
     }
@@ -87,10 +87,10 @@ class AppDataManager: DataManager {
                 var variantInfoList = ArrayList<VariantInfo>()
                 for (variantResponse in productResponse.variants!!) {
                     variant = VariantInfo()
-                    variant.id = variantResponse!!.id
-                    variant.color = variantResponse!!.color
-                    variant.price = variantResponse!!.price
-                    variant.size = variantResponse!!.size
+                    variant.id = variantResponse.id as Int
+                    variant.color = variantResponse.color as String
+                    variant.price = variantResponse.price as Int
+                    variant.size = if (variantResponse.size == null) "" else variantResponse.size as String
 
                     variantInfoList.add(variant)
                 }
@@ -115,6 +115,47 @@ class AppDataManager: DataManager {
         insertCategoriesInDB(categoryList)
         categoryList.clear()
         productList.clear()
+
+        var orderedRankingList = ArrayList<OrderedRanking>()
+        var sharedRankingList = ArrayList<SharedRanking>()
+        var viewedRankingList = ArrayList<ViewedRanking>()
+        for (rankingResponse in apiResponse.rankings!!) {
+
+            if ("Most Viewed Products".equals(rankingResponse.ranking)) {
+                for (viewCountResponse in rankingResponse.products!!) {
+                    var viewedRanking = ViewedRanking()
+                    viewedRanking.id = viewCountResponse.id!!
+                    viewedRanking.view_count = viewCountResponse.viewCount!!
+                    viewedRankingList.add(viewedRanking)
+                }
+            } else if ("Most OrdeRed Products".equals(rankingResponse.ranking)) {
+                for (viewCountResponse in rankingResponse.products!!) {
+                    var orderedRanking = OrderedRanking()
+                    orderedRanking.id = viewCountResponse.id!!
+                    orderedRanking.order_count = viewCountResponse.orderCount!!
+                    orderedRankingList.add(orderedRanking)
+                }
+            } else if ("Most ShaRed Products".equals(rankingResponse.ranking)) {
+                for (viewCountResponse in rankingResponse.products!!) {
+                    var sharedRanking = SharedRanking()
+                    sharedRanking.id = viewCountResponse.id!!
+                    sharedRanking.shares = viewCountResponse.shares!!
+                    sharedRankingList.add(sharedRanking)
+                }
+            }
+        }
+
+        if (orderedRankingList.size > 0) {
+            insertOrderedRankingInDB(orderedRankingList)
+        }
+
+        if (sharedRankingList.size > 0) {
+            insertSharedRankingInDB(sharedRankingList)
+        }
+
+        if (viewedRankingList.size > 0) {
+            insertViewedRankingInDB(viewedRankingList)
+        }
     }
 
     override fun getAllProductsFromDB(categoryId: Int): Maybe<List<Product>> {
@@ -137,5 +178,83 @@ class AppDataManager: DataManager {
         dbHelper.insertAllProductsInDB(productList)
     }
 
+    override fun getAllSimilarProducts(categoryId: Int, productId: Int): Maybe<List<Product>> {
+        return dbHelper.getSimilarProductsWithGivenCategoryIdFromDB(categoryId, productId)
+    }
+
+    override fun insertOrderedRankingInDB(orderedRankingList: List<OrderedRanking>) {
+        return dbHelper.insertOrderedRankingInDB(orderedRankingList)
+    }
+
+    override fun insertSharedRankingInDB(sharedRankingList: List<SharedRanking>) {
+        return dbHelper.insertSharedRankingInDB(sharedRankingList)
+    }
+
+    override fun insertViewedRankingInDB(viewedRankingList: List<ViewedRanking>) {
+        return dbHelper.insertViewedRankingInDB(viewedRankingList)
+    }
+
+    override fun getOrderedRanking(): Maybe<List<OrderedRanking>> {
+        return dbHelper.getOrderedRanking()
+    }
+
+    override fun getSharedRanking(): Maybe<List<SharedRanking>> {
+        return dbHelper.getSharedRanking()
+    }
+
+    override fun getViewedRanking(): Maybe<List<ViewedRanking>> {
+        return dbHelper.getViewedRanking()
+    }
+
+    override fun getAllProductByOrderedRanking(): Maybe<List<Product>> {
+        var response = getOrderedRanking().toObservable()
+                .flatMapIterable { it }
+                .flatMap { result -> getProductDetailFromDB(result.id).toObservable() }
+                .toList()
+                .toMaybe()
+
+
+        response.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    result -> Log.d("vikram", "products by ranking - " + result.size)
+                })
+
+        return response
+    }
+
+    override fun getAllProductBySharedRanking(): Maybe<List<Product>> {
+        var response = getOrderedRanking().toObservable()
+                .flatMapIterable { it }
+                .flatMap { result -> getProductDetailFromDB(result.id).toObservable() }
+                .toList()
+                .toMaybe()
+
+
+        response.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    result -> Log.d("vikram", "products by ranking - " + result.size)
+                })
+
+        return response
+    }
+
+    override fun getAllProductByViewedRanking(): Maybe<List<Product>> {
+        var response = getOrderedRanking().toObservable()
+                .flatMapIterable { it }
+                .flatMap { result -> getProductDetailFromDB(result.id).toObservable() }
+                .toList()
+                .toMaybe()
+
+
+        response.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    result -> Log.d("vikram", "products by ranking - " + result.size)
+                })
+
+        return response
+    }
 
 }

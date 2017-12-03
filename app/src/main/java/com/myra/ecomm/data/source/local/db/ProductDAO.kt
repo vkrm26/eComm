@@ -18,8 +18,8 @@ interface ProductDAO {
     @Query("SELECT * FROM product WHERE productId = :productId")
     fun getProductDetail(productId: Int): Product
 
-    @Query("SELECT * FROM product WHERE productId = :productId AND categoryId = :categoryId")
-    fun getSimilarProductsWithGivenCategoryId(productId: Int, categoryId: Int): List<Product>
+    @Query("SELECT * FROM product WHERE categoryId = :categoryId AND NOT productId = :productId")
+    fun getSimilarProductsWithGivenCategoryId(categoryId: Int, productId: Int): List<Product>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAllProducts(productList: List<Product>): Unit

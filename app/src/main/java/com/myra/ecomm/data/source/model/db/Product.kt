@@ -37,13 +37,17 @@ class Product() : Parcelable {
         categoryId = parcel.readInt()
         productName = parcel.readString()
         dataAdded = parcel.readString()
+        taxInfo = parcel.readParcelable(TaxInfo.javaClass.classLoader)
+        variantInfo = parcel.createTypedArrayList(VariantInfo.CREATOR)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeValue(productId)
-        parcel.writeValue(categoryId)
+        parcel.writeInt(productId)
+        parcel.writeInt(categoryId)
         parcel.writeString(productName)
         parcel.writeString(dataAdded)
+        parcel.writeParcelable(taxInfo, flags)
+        parcel.writeTypedList(variantInfo)
     }
 
     override fun describeContents(): Int {

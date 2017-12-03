@@ -15,4 +15,12 @@ interface DataManager: ApiHelper, DBHelper {
 
     fun getAllProductFromGivenCategory(categoryId: Int) : Maybe<List<Product>>
 
+    fun getAllSimilarProducts(categoryId: Int, productId: Int) : Maybe<List<Product>>
+
+    fun getAllProductByOrderedRanking() : Maybe<List<Product>>
+
+    fun getAllProductBySharedRanking() : Maybe<List<Product>>
+
+    fun getAllProductByViewedRanking() : Maybe<List<Product>>
+
 }

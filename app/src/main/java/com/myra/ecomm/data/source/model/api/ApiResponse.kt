@@ -16,6 +16,6 @@ class ApiResponse {
     var categories: List<CategoryResponse>? = null
     @SerializedName("rankings")
     @Expose
-    var rankings: List<Ranking>? = null
+    var rankings: List<RankingResponse>? = null
 
 }
