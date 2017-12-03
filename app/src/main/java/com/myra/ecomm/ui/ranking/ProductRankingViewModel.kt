@@ -2,6 +2,9 @@ package com.myra.ecomm.ui.ranking
 
 import android.databinding.ObservableArrayList
 import android.util.Log
+import android.widget.Toast
+import com.myra.ecomm.App
+import com.myra.ecomm.R
 import com.myra.ecomm.data.DataManager
 import com.myra.ecomm.data.source.model.db.Product
 import com.myra.ecomm.ui.base.BaseViewModel
@@ -23,16 +26,18 @@ class ProductRankingViewModel(dataManager: DataManager) : BaseViewModel<Navigato
     fun getProductByRanking(orderType: Int) {
         setIsLoading(true)
         getCompositeDisposable().add(getDataManager()
-                .getAllProductByOrderedRanking()
+                .getAllProductByRanking(orderType)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe( {
                     result -> result.size
                     productList.clear()
                     productList.addAll(result)
-
                     setIsLoading(false)
-                    Log.d("vikram", "category size - " + result.size)
+                }, {
+                    setIsLoading(false)
+                    Toast.makeText(App.instance.applicationContext,
+                            App.instance.applicationContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
                 }))
     }
 

@@ -10,14 +10,13 @@ import android.text.TextUtils
 import android.util.Log
 import android.view.Gravity
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import com.myra.ecomm.App
 import com.myra.ecomm.BR
 
 import com.myra.ecomm.R
-import com.myra.ecomm.Util
+import com.myra.ecomm.util.Util
 import com.myra.ecomm.data.source.model.db.Product
 import com.myra.ecomm.databinding.ActivityDetailBinding
 import com.myra.ecomm.di.component.DaggerProductDetailComponent
@@ -58,54 +57,58 @@ class ProductDetailActivity : BaseActivity<ActivityDetailBinding, ProductDetailV
 
         if (intent != null) {
             var product = intent.getParcelableExtra<Product>("product")
-            Log.d("vikram", "productId - " + product.productId)
+//            Log.d("vikram", "productId - " + product.productId)
 
-            var layoutParams = LinearLayout.LayoutParams(100, 100)
-            layoutParams.rightMargin = 20
-            layoutParams.gravity = Gravity.CENTER
-
-            var colorMap = HashMap<String, Int>()
-            var sizeMap = HashMap<String, Int>()
-            for (variant in product.variantInfo!!) {
-
-                if (!colorMap.containsKey(variant.color)) {
-                    colorMap.put(variant.color, Util.getColor(variant.color))
-
-                    var textView = TextView(this)
-                    textView.gravity = Gravity.CENTER
-                    textView.background = ContextCompat.getDrawable(this, colorMap.get(variant.color)!!)
-                    textView.layoutParams = layoutParams
-
-                    mActivityBinding.layoutColors.addView(textView)
-                }
-
-                if (!TextUtils.isEmpty(variant.size) && !sizeMap.containsKey(variant.size)) {
-                    sizeMap.put(variant.size, 1)
-
-                    var textView = TextView(this)
-
-                    textView.setText(variant.size)
-                    textView.gravity = Gravity.CENTER
-                    textView.background = ContextCompat.getDrawable(this, R.drawable.size_background)
-                    textView.layoutParams = layoutParams
-
-                    mActivityBinding.layoutSize.addView(textView)
-                }
-            }
-
-            if (colorMap.isEmpty()) {
-                mActivityBinding.dividerColor.visibility = View.GONE
-                mActivityBinding.layoutColors.visibility = View.GONE
-                mActivityBinding.headingAvailableColor.visibility = View.GONE
-            }
-
-            if (sizeMap.isEmpty()) {
-                mActivityBinding.dividerSelectSize.visibility = View.GONE
-                mActivityBinding.layoutSize.visibility = View.GONE
-                mActivityBinding.headingSelectSize.visibility = View.GONE
-            }
-
+            supportActionBar!!.title = product.productName
+            setColorAndSize(product)
             productDetailViewModel.setProduct(product)
+        }
+    }
+
+    private fun setColorAndSize(product: Product) {
+        var layoutParams = LinearLayout.LayoutParams(100, 100)
+        layoutParams.rightMargin = 20
+        layoutParams.gravity = Gravity.CENTER
+
+        var colorMap = HashMap<String, Int>()
+        var sizeMap = HashMap<String, Int>()
+        for (variant in product.variantInfo!!) {
+
+            if (!colorMap.containsKey(variant.color)) {
+                colorMap.put(variant.color, Util.getColor(variant.color))
+
+                var textView = TextView(this)
+                textView.gravity = Gravity.CENTER
+                textView.background = ContextCompat.getDrawable(this, colorMap.get(variant.color)!!)
+                textView.layoutParams = layoutParams
+
+                mActivityBinding.layoutColors.addView(textView)
+            }
+
+            if (!TextUtils.isEmpty(variant.size) && !sizeMap.containsKey(variant.size)) {
+                sizeMap.put(variant.size, 1)
+
+                var textView = TextView(this)
+
+                textView.setText(variant.size)
+                textView.gravity = Gravity.CENTER
+                textView.background = ContextCompat.getDrawable(this, R.drawable.size_background)
+                textView.layoutParams = layoutParams
+
+                mActivityBinding.layoutSize.addView(textView)
+            }
+        }
+
+        if (colorMap.isEmpty()) {
+            mActivityBinding.dividerColor.visibility = View.GONE
+            mActivityBinding.layoutColors.visibility = View.GONE
+            mActivityBinding.headingAvailableColor.visibility = View.GONE
+        }
+
+        if (sizeMap.isEmpty()) {
+            mActivityBinding.dividerSelectSize.visibility = View.GONE
+            mActivityBinding.layoutSize.visibility = View.GONE
+            mActivityBinding.headingSelectSize.visibility = View.GONE
         }
     }
 

@@ -7,4 +7,8 @@ object AppConstants {
 
     val DB_NAME = "eComm.db"
 
+    val RANKING_BY_VIEW = 0
+    val RANKING_BY_ORDER = 1
+    val RANKING_BY_SHARE = 2
+
 }

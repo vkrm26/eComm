@@ -9,7 +9,7 @@ import com.myra.ecomm.ui.productDetail.ProductDetailActivity
 /**
  * Created by vikrambhati on 27/11/17.
  */
-class ProductViewHolder (productBinding: ItemProductBinding) : RecyclerView.ViewHolder(productBinding.root), ProductItemViewModel.ProductViewModelListener {
+class ProductViewHolder(productBinding: ItemProductBinding) : RecyclerView.ViewHolder(productBinding.root), ProductItemViewModel.ProductViewModelListener {
 
 
     private val itemProductBinding = productBinding

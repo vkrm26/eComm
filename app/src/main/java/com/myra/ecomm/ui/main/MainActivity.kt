@@ -12,14 +12,12 @@ import com.myra.ecomm.App
 import com.myra.ecomm.BR
 import com.myra.ecomm.R
 import com.myra.ecomm.databinding.ActivityMainBinding
-import com.myra.ecomm.di.component.ActivityComponent
 import com.myra.ecomm.di.component.DaggerMainActivityComponent
 import com.myra.ecomm.ui.base.BaseActivity
 import com.myra.ecomm.ui.main.adapter.CategoryAdapter
 import com.myra.ecomm.ui.productDetail.ProductDetailActivity
 import javax.inject.Inject
-import android.R.menu
-import android.view.MenuInflater
+import com.myra.ecomm.AppConstants
 import com.myra.ecomm.ui.ranking.ProductRankingActivity
 
 
@@ -69,11 +67,18 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(), MainNav
         when (item!!.getItemId()) {
             R.id.most_viewed -> {
                 var intent = Intent(this, ProductRankingActivity::class.java)
+                intent.putExtra("type", AppConstants.RANKING_BY_VIEW)
                 startActivity(intent)
             }
             R.id.most_ordered -> {
+                var intent = Intent(this, ProductRankingActivity::class.java)
+                intent.putExtra("type", AppConstants.RANKING_BY_ORDER)
+                startActivity(intent)
             }
             R.id.most_shared -> {
+                var intent = Intent(this, ProductRankingActivity::class.java)
+                intent.putExtra("type", AppConstants.RANKING_BY_SHARE)
+                startActivity(intent)
             }
         }
         return true

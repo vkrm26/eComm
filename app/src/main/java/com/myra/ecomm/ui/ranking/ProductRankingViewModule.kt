@@ -2,7 +2,7 @@ package com.myra.ecomm.ui.ranking
 
 import android.arch.lifecycle.ViewModelProvider
 import android.content.Context
-import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.GridLayoutManager
 import com.myra.ecomm.ViewModelProviderFactory
 import com.myra.ecomm.data.DataManager
 import com.myra.ecomm.data.source.model.db.Product
@@ -27,8 +27,8 @@ class ProductRankingViewModule {
     }
 
     @Provides
-    fun provideLinearLayoutManager(context : Context): LinearLayoutManager {
-        return LinearLayoutManager(context)
+    fun provideGridLayoutManager(context : Context): GridLayoutManager {
+        return GridLayoutManager(context, 3)
     }
 
     @Provides

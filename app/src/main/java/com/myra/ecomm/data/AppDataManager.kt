@@ -1,6 +1,7 @@
 package com.myra.ecomm.data
 
 import android.util.Log
+import com.myra.ecomm.AppConstants
 import com.myra.ecomm.data.source.local.DBHelper
 import com.myra.ecomm.data.source.model.TaxInfo
 import com.myra.ecomm.data.source.model.VariantInfo
@@ -36,22 +37,20 @@ class AppDataManager: DataManager {
     }
 
     override fun getAllCategoriesFromDB(): Maybe<List<Category>> {
-        return dbHelper.getAllCategoriesFromDB()
+        return dbHelper.getAllCategoriesFromDB().filter { result -> result.isNotEmpty() }
     }
 
     override fun getAllCategory(): Maybe<List<Category>> {
-//        var categoryFromDB = getAllCategoriesFromDB()
+        var categoryFromDB = getAllCategoriesFromDB()
         var categoryFromServer = getCategoryFromServer()
 
-//        return Maybe.concat(categoryFromDB, categoryFromServer).firstElement()
-        return categoryFromServer
-
+        return Maybe.concat(categoryFromDB, categoryFromServer).firstElement()
     }
 
     fun getCategoryFromServer() : Maybe<List<Category>> {
         var response = getDataFromServer()
                 .flatMap { result ->
-                    Log.d("vikram", "size - " + result.categories!!.size)
+//                    Log.d("vikram", "size - " + result.categories!!.size)
                     insertAllDataInDB(result)
                     getAllCategoriesFromDB()
                 }
@@ -60,7 +59,8 @@ class AppDataManager: DataManager {
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe( {
                 result ->
-                Log.d("vikram", "size - " + result.size) })
+//                Log.d("vikram", "size - " + result.size)
+            }, { })
 
         return response
     }
@@ -206,7 +206,17 @@ class AppDataManager: DataManager {
         return dbHelper.getViewedRanking()
     }
 
-    override fun getAllProductByOrderedRanking(): Maybe<List<Product>> {
+    override fun getAllProductByRanking(type: Int): Maybe<List<Product>> {
+        when(type) {
+            AppConstants.RANKING_BY_ORDER -> return getAllProductByOrderedRanking()
+            AppConstants.RANKING_BY_SHARE -> return getAllProductBySharedRanking()
+            AppConstants.RANKING_BY_VIEW -> return getAllProductByViewedRanking()
+        }
+
+        return Maybe.just(ArrayList<Product>())
+    }
+
+    fun getAllProductByOrderedRanking() : Maybe<List<Product>> {
         var response = getOrderedRanking().toObservable()
                 .flatMapIterable { it }
                 .flatMap { result -> getProductDetailFromDB(result.id).toObservable() }
@@ -217,14 +227,14 @@ class AppDataManager: DataManager {
         response.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    result -> Log.d("vikram", "products by ranking - " + result.size)
+//                    result -> Log.d("vikram", "products by ranking - " + result.size)
                 })
 
         return response
     }
 
-    override fun getAllProductBySharedRanking(): Maybe<List<Product>> {
-        var response = getOrderedRanking().toObservable()
+    fun getAllProductBySharedRanking(): Maybe<List<Product>> {
+        var response = getSharedRanking().toObservable()
                 .flatMapIterable { it }
                 .flatMap { result -> getProductDetailFromDB(result.id).toObservable() }
                 .toList()
@@ -234,14 +244,14 @@ class AppDataManager: DataManager {
         response.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    result -> Log.d("vikram", "products by ranking - " + result.size)
+//                    result -> Log.d("vikram", "products by ranking - " + result.size)
                 })
 
         return response
     }
 
-    override fun getAllProductByViewedRanking(): Maybe<List<Product>> {
-        var response = getOrderedRanking().toObservable()
+    fun getAllProductByViewedRanking(): Maybe<List<Product>> {
+        var response = getViewedRanking().toObservable()
                 .flatMapIterable { it }
                 .flatMap { result -> getProductDetailFromDB(result.id).toObservable() }
                 .toList()
@@ -251,7 +261,7 @@ class AppDataManager: DataManager {
         response.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    result -> Log.d("vikram", "products by ranking - " + result.size)
+//                    result -> Log.d("vikram", "products by ranking - " + result.size)
                 })
 
         return response

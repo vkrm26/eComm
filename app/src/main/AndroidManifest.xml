@@ -3,6 +3,7 @@
     package="com.myra.ecomm">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name=".App"
@@ -12,16 +13,20 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.main.MainActivity">
+        <activity android:name=".ui.main.MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.productDetail.ProductDetailActivity" />
-        <activity android:name=".ui.products.ProductsActivity" />
-        <activity android:name=".ui.ranking.ProductRankingActivity"></activity>
+        <activity android:name=".ui.productDetail.ProductDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.products.ProductsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".ui.ranking.ProductRankingActivity"
+            android:screenOrientation="portrait"></activity>
     </application>
 
 </manifest>

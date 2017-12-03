@@ -34,7 +34,7 @@ class CategoryViewHolderModule {
 
     @Provides
     fun provideGridLayoutManager(context: Context): GridLayoutManager {
-        return GridLayoutManager(context, 1)
+        return GridLayoutManager(context, 3)
     }
 
     @Provides

@@ -1,30 +1,14 @@
-package com.myra.ecomm
+package com.myra.ecomm.util
 
 import android.content.Context
-import android.content.ContextWrapper
+import android.net.ConnectivityManager
+import com.myra.ecomm.App
+import com.myra.ecomm.R
 
 /**
  * Created by vikrambhati on 26/11/17.
  */
 object Util {
-
-    // Tries to cast an Activity Context to another type
-    fun <T> castActivityFromContext(context: Context, castClass: Class<T>): T? {
-        var context = context
-        if (castClass.isInstance(context)) {
-            return context as T
-        }
-
-        while (context is ContextWrapper) {
-            context = context.baseContext
-
-            if (castClass.isInstance(context)) {
-                return context as T
-            }
-        }
-
-        return null
-    }
 
     fun getColor(colorStr: String) : Int {
         if ("Blue".equals(colorStr)) return R.color.Blue
@@ -39,8 +23,13 @@ object Util {
         else if ("Silver".equals(colorStr)) return R.color.Silver
         else if ("Golden".equals(colorStr)) return R.color.Golden
         else return R.color.defaultColor
+    }
 
-
+    fun isNetworkConnected(): Boolean {
+        var context = App.instance.applicationContext
+        val cm = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        val netInfo = cm.activeNetworkInfo
+        return netInfo != null && netInfo.isConnectedOrConnecting
     }
 
 }

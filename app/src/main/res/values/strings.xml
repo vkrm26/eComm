@@ -9,4 +9,8 @@
     <string name="most_viewed_products">Most Viewed Products</string>
     <string name="most_ordered_products">Most Ordered Products</string>
     <string name="most_shared_products">Most Shared Products</string>
+    <string name="no_internet">Oops! No Internet Connection</string>
+    <string name="most_shared">Most Shared Products</string>
+    <string name="most_viewed">Most Viewed Products</string>
+    <string name="most_ordered">Most Ordered Products</string>
 </resources>

@@ -1,70 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:tools="http://schemas.android.com/tools"
-xmlns:app="http://schemas.android.com/apk/res-auto">
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
     <data>
 
-    <variable
-    name="viewModel"
-    type="com.myra.ecomm.ui.main.adapter.CategoryViewModel" />
+        <variable
+            name="viewModel"
+            type="com.myra.ecomm.ui.main.adapter.CategoryViewModel" />
 
     </data>
 
     <android.support.v7.widget.CardView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="5dp"
-    android:elevation="5dp">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:elevation="5dp">
 
-    <LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="horizontal">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:id="@+id/textView"
-    android:layout_weight="1"
-    android:padding="16dp"
-    android:textStyle="bold"
-    android:text="@{viewModel.categoryName}"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/textView"
+                    android:layout_weight="1"
+                    android:padding="16dp"
+                    android:textStyle="bold"
+                    android:text="@{viewModel.categoryName}"/>
 
-    <TextView
-    android:layout_width="0dp"
-    android:layout_height="wrap_content"
-    android:id="@+id/txt_more"
-    android:layout_weight="1"
-    android:padding="16dp"
-    android:text="@string/more_option"
-    android:onClick="@{() -> viewModel.onMoreOptionClick()}"
-    android:gravity="right"
-    android:textStyle="bold"
-    android:textColor="#0c7b19"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txt_more"
+                    android:layout_weight="1"
+                    android:padding="16dp"
+                    android:text="@string/more_option"
+                    android:onClick="@{() -> viewModel.onMoreOptionClick()}"
+                    android:gravity="right"
+                    android:textStyle="bold"
+                    android:textColor="#0c7b19"/>
 
-    </LinearLayout>
+            </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-    android:id="@+id/recycler_product"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:productAdapter="@{viewModel.productList}"
-    tools:listitem="@layout/item_product" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_product"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:productAdapter="@{viewModel.productList}"
+            tools:listitem="@layout/item_product" />
 
-    <!--<android.support.v4.widget.ContentLoadingProgressBar-->
-    <!--android:id="@+id/progress_bar"-->
-    <!--style="?android:attr/progressBarStyleSmall"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:visibility="@{viewModel.isLoading ? View.VISIBLE : View.GONE}"/>-->
-
-    </LinearLayout>
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 

@@ -1,7 +1,9 @@
 package com.myra.ecomm.ui.main
 
 import android.databinding.ObservableArrayList
-import android.util.Log
+import android.widget.Toast
+import com.myra.ecomm.App
+import com.myra.ecomm.R
 import com.myra.ecomm.data.DataManager
 import com.myra.ecomm.data.source.model.db.Category
 import com.myra.ecomm.ui.base.BaseViewModel
@@ -30,7 +32,10 @@ class MainViewModel(dataManager: DataManager) : BaseViewModel<MainNavigator>(dat
                     categoryList.clear()
                     categoryList.addAll(result)
                     setIsLoading(false)
-                    Log.d("vikram", "category size - " + result.size)
+                }, {
+                    setIsLoading(false)
+                    Toast.makeText(App.instance.applicationContext,
+                            App.instance.applicationContext.getString(R.string.no_internet), Toast.LENGTH_SHORT).show()
                 }))
     }
 }

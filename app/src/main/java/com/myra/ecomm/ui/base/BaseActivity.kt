@@ -5,7 +5,6 @@ import android.databinding.ViewDataBinding
 import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.AppCompatActivity
-import com.myra.ecomm.di.component.ActivityComponent
 
 /**
  * Created by vikrambhati on 24/11/17.

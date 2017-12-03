@@ -17,10 +17,6 @@ interface DataManager: ApiHelper, DBHelper {
 
     fun getAllSimilarProducts(categoryId: Int, productId: Int) : Maybe<List<Product>>
 
-    fun getAllProductByOrderedRanking() : Maybe<List<Product>>
-
-    fun getAllProductBySharedRanking() : Maybe<List<Product>>
-
-    fun getAllProductByViewedRanking() : Maybe<List<Product>>
+    fun getAllProductByRanking(type: Int) : Maybe<List<Product>>
 
 }

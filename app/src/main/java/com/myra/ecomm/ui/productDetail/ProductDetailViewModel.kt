@@ -8,10 +8,9 @@ import android.text.TextUtils
 import android.util.Log
 import com.myra.ecomm.App
 import com.myra.ecomm.R
-import com.myra.ecomm.Util
+import com.myra.ecomm.util.Util
 import com.myra.ecomm.data.DataManager
 import com.myra.ecomm.data.source.model.VariantInfo
-import com.myra.ecomm.data.source.model.db.Category
 import com.myra.ecomm.data.source.model.db.Product
 import com.myra.ecomm.ui.base.BaseViewModel
 import com.myra.ecomm.ui.navigator.Navigator
@@ -85,7 +84,6 @@ class ProductDetailViewModel(dataManager: DataManager) : BaseViewModel<Navigator
                     productList.addAll(result)
 
                     setIsLoading(false)
-                    Log.d("vikram", "category size - " + result.size)
                 }))
     }
 

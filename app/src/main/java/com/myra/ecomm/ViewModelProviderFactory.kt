@@ -14,5 +14,4 @@ class ViewModelProviderFactory<V : Any>(private val viewModel: V) : ViewModelPro
         }
         throw IllegalArgumentException("Unknown class name")
     }
-
 }

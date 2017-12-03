@@ -11,13 +11,8 @@ import com.myra.ecomm.BR
 
 import com.myra.ecomm.R
 import com.myra.ecomm.data.source.model.db.Category
-import com.myra.ecomm.data.source.model.db.Product
 import com.myra.ecomm.databinding.ActivityProductsBinding
-import com.myra.ecomm.di.component.ActivityComponent
-import com.myra.ecomm.di.component.DaggerActivityComponent
-import com.myra.ecomm.di.component.DaggerMainActivityComponent
 import com.myra.ecomm.di.component.DaggerViewHolderComponent
-import com.myra.ecomm.di.module.ActivityModule
 import com.myra.ecomm.ui.base.BaseActivity
 import com.myra.ecomm.ui.main.adapter.CategoryViewHolderModule
 import com.myra.ecomm.ui.main.adapter.CategoryViewModel
@@ -56,8 +51,9 @@ class ProductsActivity : BaseActivity<ActivityProductsBinding, CategoryViewModel
         setup()
 
         if (intent != null) {
-            var category = intent.getParcelableExtra<Category>("categoryId")
-            Log.d("vikram", "categoryId - " + category.categoryId)
+            var category = intent.getParcelableExtra<Category>("category")
+//            Log.d("vikram", "categoryId - " + category.categoryId)
+            supportActionBar!!.title = category.categoryName
             productViewModel.setCategory(category)
         }
     }

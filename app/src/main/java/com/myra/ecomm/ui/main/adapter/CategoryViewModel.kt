@@ -48,7 +48,7 @@ class CategoryViewModel(dataManager: DataManager) : BaseViewModel<Navigator>(dat
                     productList.addAll(result)
 
                     setIsLoading(false)
-                    Log.d("vikram", "category size - " + result.size)
+//                    Log.d("vikram", "category size - " + result.size)
                 }))
     }
 

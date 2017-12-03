@@ -4,8 +4,11 @@ import android.arch.lifecycle.ViewModelProvider
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.LinearLayoutManager
+import android.widget.Toast
 import com.myra.ecomm.App
+import com.myra.ecomm.AppConstants
 import com.myra.ecomm.BR
 
 import com.myra.ecomm.R
@@ -13,6 +16,7 @@ import com.myra.ecomm.databinding.ActivityProductRankingBinding
 import com.myra.ecomm.di.component.DaggerProductRankingComponent
 import com.myra.ecomm.ui.base.BaseActivity
 import com.myra.ecomm.ui.main.adapter.ProductAdapter
+import com.myra.ecomm.util.Util
 import javax.inject.Inject
 
 class ProductRankingActivity : BaseActivity<ActivityProductRankingBinding, ProductRankingViewModel>() {
@@ -26,7 +30,7 @@ class ProductRankingActivity : BaseActivity<ActivityProductRankingBinding, Produ
     lateinit var productDetailViewModel: ProductRankingViewModel
 
     @Inject
-    lateinit var mLayoutManager: LinearLayoutManager
+    lateinit var mLayoutManager: GridLayoutManager
 
     @Inject
     lateinit var productAdapter: ProductAdapter
@@ -45,12 +49,20 @@ class ProductRankingActivity : BaseActivity<ActivityProductRankingBinding, Produ
         mActivityBinding = viewDataBinding!!
         setup()
 
-        productDetailViewModel.getProductByRanking(0)
+        if (intent != null) {
+            var type = intent.getIntExtra("type", -1)
+            if (type != -1) {
+                supportActionBar!!.title = if (type == AppConstants.RANKING_BY_VIEW) getString(R.string.most_viewed)
+                else if (type == AppConstants.RANKING_BY_ORDER) getString(R.string.most_ordered)
+                else getString(R.string.most_shared)
+
+                productDetailViewModel.getProductByRanking(type)
+            }
+        }
 
     }
 
     private fun setup() {
-        mLayoutManager.orientation = LinearLayoutManager.VERTICAL
         mActivityBinding.productRecyclerView.setLayoutManager(mLayoutManager)
         mActivityBinding.productRecyclerView.setItemAnimator(DefaultItemAnimator())
         mActivityBinding.productRecyclerView.setAdapter(productAdapter)

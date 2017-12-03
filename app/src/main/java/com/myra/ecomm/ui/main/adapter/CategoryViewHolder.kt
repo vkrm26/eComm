@@ -61,7 +61,7 @@ class CategoryViewHolder (categoryBinding: ItemCategoryBinding) : BaseViewHolder
 
     override fun onMoreOptionClick(category: Category) {
         var intent = Intent(itemCategoryBinding.root.context, ProductsActivity::class.java)
-        intent.putExtra("categoryId", category)
+        intent.putExtra("category", category)
         itemCategoryBinding.root.context.startActivity(intent)
     }
 
